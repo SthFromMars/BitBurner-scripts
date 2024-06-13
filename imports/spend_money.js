@@ -4,7 +4,6 @@ import {
     readServerToHack,
     readRamToBuy,
     writeRamToBuy,
-    removeRamToBuy,
     readStage,
 } from "./imports/file_utils";
 import tryNukeBackdoorAll from "try_nuke_backdoor_all";
@@ -24,71 +23,52 @@ const PurchaseTypeEnum = {
 const HACKNET_LIMIT = 1000000000;
 const BOUGHT_SERVER_NAME = "martian";
 
-export async function main(ns) {
-    ns.disableLog("getServerMoneyAvailable");
-    ns.disableLog("sleep");
-    ns.disableLog("getServerMaxRam");
-    ns.disableLog("exec");
-    ns.disableLog("hasTorRouter");
-    ns.disableLog("fileExists");
-    ns.disableLog("scan");
-    ns.disableLog("brutessh");
-    ns.disableLog("ftpcrack");
-    ns.disableLog("relaysmtp");
-    ns.disableLog("httpworm");
-    ns.disableLog("sqlinject");
-    ns.disableLog("nuke");
-    ns.disableLog("scp");
+export default async function (ns, hacknetBuyingPar) {
+    let hacknetBuying = hacknetBuyingPar;
 
-    let hacknetBuying = true;
-
-    if (!ns.getPurchasedServers().length) removeRamToBuy(ns);
-
-    while (true) {
-        let hacknetPurchase = { price: Infinity };
-        if (hacknetBuying) {
-            hacknetPurchase = getHacknetPurchase(ns);
-            if (hacknetPurchase.price > HACKNET_LIMIT) {
-                hacknetBuying = false;
-                hacknetPurchase = { price: Infinity };
-            }
+    let hacknetPurchase = { price: Infinity };
+    if (hacknetBuying) {
+        hacknetPurchase = getHacknetPurchase(ns);
+        if (hacknetPurchase.price > HACKNET_LIMIT) {
+            hacknetBuying = false;
+            hacknetPurchase = { price: Infinity };
         }
-        const serverPurchase = getServerUpgrade(ns);
-        const programPurchase = getProgramPurchase(ns);
-        const travelPurchase = getTravelPurchase(ns);
-
-        const smallestPurchase = {
-            type: PurchaseTypeEnum.HACKNET,
-            price: hacknetPurchase.price,
-        };
-        if (serverPurchase.price < smallestPurchase.price) {
-            smallestPurchase.type = PurchaseTypeEnum.SERVER;
-            smallestPurchase.price = serverPurchase.price;
-        } else if (programPurchase.price < smallestPurchase.price) {
-            smallestPurchase.type = PurchaseTypeEnum.PROGRAM;
-            smallestPurchase.price = programPurchase.price;
-        } else if (travelPurchase.price < smallestPurchase.price) {
-            smallestPurchase.type = PurchaseTypeEnum.TRAVEL;
-            smallestPurchase.price = travelPurchase.price;
-        }
-
-        switch (smallestPurchase.type) {
-            case PurchaseTypeEnum.HACKNET:
-                await buyHacknet(ns, hacknetPurchase);
-                break;
-            case PurchaseTypeEnum.SERVER:
-                await buyServer(ns);
-                break;
-            case PurchaseTypeEnum.PROGRAM:
-                await buyProgram(ns, programPurchase);
-                break;
-            case PurchaseTypeEnum.TRAVEL:
-                buyTravel(ns, travelPurchase);
-                break;
-        }
-
-        await ns.sleep(10000);
     }
+    const serverPurchase = getServerUpgrade(ns);
+    const programPurchase = getProgramPurchase(ns);
+    const travelPurchase = getTravelPurchase(ns);
+
+    const smallestPurchase = {
+        type: PurchaseTypeEnum.HACKNET,
+        price: hacknetPurchase.price,
+    };
+    if (serverPurchase.price < smallestPurchase.price) {
+        smallestPurchase.type = PurchaseTypeEnum.SERVER;
+        smallestPurchase.price = serverPurchase.price;
+    } else if (programPurchase.price < smallestPurchase.price) {
+        smallestPurchase.type = PurchaseTypeEnum.PROGRAM;
+        smallestPurchase.price = programPurchase.price;
+    } else if (travelPurchase.price < smallestPurchase.price) {
+        smallestPurchase.type = PurchaseTypeEnum.TRAVEL;
+        smallestPurchase.price = travelPurchase.price;
+    }
+
+    switch (smallestPurchase.type) {
+        case PurchaseTypeEnum.HACKNET:
+            await buyHacknet(ns, hacknetPurchase);
+            break;
+        case PurchaseTypeEnum.SERVER:
+            await buyServer(ns);
+            break;
+        case PurchaseTypeEnum.PROGRAM:
+            await buyProgram(ns, programPurchase);
+            break;
+        case PurchaseTypeEnum.TRAVEL:
+            buyTravel(ns, travelPurchase);
+            break;
+    }
+
+    return hacknetBuying;
 }
 
 function getTravelPurchase(ns) {
