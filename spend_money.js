@@ -5,6 +5,7 @@ import {
     readRamToBuy,
     writeRamToBuy,
     removeRamToBuy,
+    readStage,
 } from "./imports/file_utils";
 import tryNukeBackdoorAll from "try_nuke_backdoor_all";
 
@@ -12,6 +13,13 @@ const LEVEL = "LEVEL";
 const RAM = "RAM";
 const CORE = "CORE";
 const NODE = "NODE";
+
+const PurchaseTypeEnum = {
+    HACKNET: 0,
+    SERVER: 1,
+    PROGRAM: 2,
+    TRAVEL: 3,
+};
 
 const HACKNET_LIMIT = 1000000000;
 const BOUGHT_SERVER_NAME = "martian";
@@ -32,30 +40,80 @@ export async function main(ns) {
     ns.disableLog("nuke");
     ns.disableLog("scp");
 
-    // let hacknetBuying = true;
-    let hacknetBuying = false; // hacknet disabled
+    let hacknetBuying = true;
 
     if (!ns.getPurchasedServers().length) removeRamToBuy(ns);
 
     while (true) {
-        let hacknetPurchase = null;
+        let hacknetPurchase = { price: Infinity };
         if (hacknetBuying) {
             hacknetPurchase = getHacknetPurchase(ns);
             if (hacknetPurchase.price > HACKNET_LIMIT) {
                 hacknetBuying = false;
-                hacknetPurchase = null;
+                hacknetPurchase = { price: Infinity };
             }
         }
         const serverPurchase = getServerUpgrade(ns);
         const programPurchase = getProgramPurchase(ns);
+        const travelPurchase = getTravelPurchase(ns);
 
-        if (hacknetBuying && hacknetPurchase.price * 10 < serverPurchase.price)
-            await buyHacknet(ns, hacknetPurchase);
-        else if (programPurchase.price < serverPurchase.price)
-            await buyProgram(ns, programPurchase);
-        else await buyServer(ns);
+        const smallestPurchase = {
+            type: PurchaseTypeEnum.HACKNET,
+            price: hacknetPurchase.price,
+        };
+        if (serverPurchase.price < smallestPurchase.price) {
+            smallestPurchase.type = PurchaseTypeEnum.SERVER;
+            smallestPurchase.price = serverPurchase.price;
+        } else if (programPurchase.price < smallestPurchase.price) {
+            smallestPurchase.type = PurchaseTypeEnum.PROGRAM;
+            smallestPurchase.price = programPurchase.price;
+        } else if (travelPurchase.price < smallestPurchase.price) {
+            smallestPurchase.type = PurchaseTypeEnum.TRAVEL;
+            smallestPurchase.price = travelPurchase.price;
+        }
+
+        switch (smallestPurchase.type) {
+            case PurchaseTypeEnum.HACKNET:
+                await buyHacknet(ns, hacknetPurchase);
+                break;
+            case PurchaseTypeEnum.SERVER:
+                await buyServer(ns);
+                break;
+            case PurchaseTypeEnum.PROGRAM:
+                await buyProgram(ns, programPurchase);
+                break;
+            case PurchaseTypeEnum.TRAVEL:
+                buyTravel(ns, travelPurchase);
+                break;
+        }
+
         await ns.sleep(10000);
     }
+}
+
+function getTravelPurchase(ns) {
+    const stageNr = readStage(ns);
+    if (stageNr !== 0) return { price: Infinity };
+    const player = ns.getPlayer();
+    if (!player.factions.includes("Tian Di Hui") && player.city !== "Chongqing")
+        return {
+            destination: "Chongqing",
+            price: 200000,
+        };
+    else if (
+        player.factions.includes("Tian Di Hui") &&
+        player.city !== "Sector-12"
+    )
+        return {
+            destination: "Sector-12",
+            price: 200000,
+        };
+    else return { price: Infinity };
+}
+
+function buyTravel(ns, travelPurchase) {
+    if (travelPurchase.price < ns.getServerMoneyAvailable("home"))
+        ns.singularity.travelToCity(travelPurchase.destination);
 }
 
 function getProgramPurchase(ns) {
