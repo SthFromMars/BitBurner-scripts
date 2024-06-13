@@ -1,0 +1,27 @@
+Hacknet max price: $111.701m
+Good infiltration: noodle bar in Neo Tokyo
+
+TODO:
+  automate Faction rep gain
+  automate augments
+  automate home server upgrades
+  cut ram usage to 32GB
+  automate sharing ram with factions
+  fix getting stuck if it cant fill up a server
+  dont wait for all batches to finish (requires server list persistence between loops)
+
+current multipliers +28%
+
+Factions:
+  Stage 1:
+    CyberSec
+    Tian Di Hui
+    Netburners
+  Stage 2:
+    NiteSec
+    The Black Hand
+  Stage 3:
+    BitRunners
+    Daedalus
+  Stage 4:
+    Daedalus
