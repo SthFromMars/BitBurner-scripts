@@ -17,7 +17,6 @@ function getFactions(ns, stageNr) {
             factions = ["CyberSec", "Tian Di Hui", "Netburners"];
             break;
         case 1:
-            an;
             factions = ["NiteSec", "The Black Hand"];
             break;
         case 2:

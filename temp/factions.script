@@ -1,0 +1,308 @@
+[
+
+    {
+        "name": "Tian Di Hui",
+        "augmentations": [
+            {
+                "name": "ADR-V1 Pheromone Gene",
+                "repReq": 3750,
+                "basePrice": 17500000,
+                "prereq": [],
+                "factions": "Tian Di Hui"
+            },
+            {
+                "name": "Social Negotiation Assistant (S.N.A)",
+                "repReq": 6250,
+                "basePrice": 30000000,
+                "prereq": [],
+                "factions": "Tian Di Hui"
+            }
+        ]
+    },
+    {
+        "name": "Netburners",
+        "augmentations": [
+            {
+                "name": "Hacknet Node CPU Architecture Neural-Upload",
+                "repReq": 3750,
+                "basePrice": 11000000,
+                "prereq": [],
+                "factions": "Netburners"
+            },
+            {
+                "name": "Hacknet Node Cache Architecture Neural-Upload",
+                "repReq": 2500,
+                "basePrice": 5500000,
+                "prereq": [],
+                "factions": "Netburners"
+            },
+            {
+                "name": "Hacknet Node NIC Architecture Neural-Upload",
+                "repReq": 1875,
+                "basePrice": 4500000,
+                "prereq": [],
+                "factions": "Netburners"
+            },
+            {
+                "name": "Hacknet Node Kernel Direct-Neural Interface",
+                "repReq": 7500,
+                "basePrice": 40000000,
+                "prereq": [],
+                "factions": "Netburners"
+            },
+            {
+                "name": "Hacknet Node Core Direct-Neural Interface",
+                "repReq": 12500,
+                "basePrice": 60000000,
+                "prereq": [],
+                "factions": "Netburners"
+            }
+        ]
+    },
+    {
+        "name": "Sector-12",
+        "augmentations": [
+            {
+                "name": "CashRoot Starter Kit",
+                "repReq": 12500,
+                "basePrice": 125000000,
+                "prereq": [],
+                "factions": "Sector-12"
+            }
+        ]
+    },
+    {
+        "name": "CyberSec",
+        "augmentations": [
+            {
+                "name": "BitWire",
+                "repReq": 3750,
+                "basePrice": 10000000,
+                "prereq": [],
+                "factions": "CyberSec"
+            },
+            {
+                "name": "Synaptic Enhancement Implant",
+                "repReq": 2000,
+                "basePrice": 7500000,
+                "prereq": [],
+                "factions": "CyberSec"
+            },
+            {
+                "name": "Cranial Signal Processors - Gen I",
+                "repReq": 10000,
+                "basePrice": 70000000,
+                "prereq": [],
+                "factions": "CyberSec"
+            },
+            {
+                "name": "Cranial Signal Processors - Gen II",
+                "repReq": 18750,
+                "basePrice": 125000000,
+                "prereq": [
+                    "Cranial Signal Processors - Gen I"
+                ],
+                "factions": "CyberSec"
+            },
+            {
+                "name": "Neurotrainer I",
+                "repReq": 1000,
+                "basePrice": 4000000,
+                "prereq": [],
+                "factions": "CyberSec"
+            }
+        ]
+    },
+    {
+        "name": "NiteSec",
+        "augmentations": [
+            {
+                "name": "Artificial Synaptic Potentiation",
+                "repReq": 6250,
+                "basePrice": 80000000,
+                "prereq": [],
+                "factions": "NiteSec"
+            },
+            {
+                "name": "Neural-Retention Enhancement",
+                "repReq": 20000,
+                "basePrice": 250000000,
+                "prereq": [],
+                "factions": "NiteSec"
+            },
+            {
+                "name": "Embedded Netburner Module",
+                "repReq": 15000,
+                "basePrice": 250000000,
+                "prereq": [],
+                "factions": "NiteSec"
+            },
+            {
+                "name": "Cranial Signal Processors - Gen III",
+                "repReq": 50000,
+                "basePrice": 550000000,
+                "prereq": [
+                    "Cranial Signal Processors - Gen II",
+                    "Cranial Signal Processors - Gen I"
+                ],
+                "factions": "NiteSec"
+            },
+            {
+                "name": "Neurotrainer II",
+                "repReq": 10000,
+                "basePrice": 45000000,
+                "prereq": [],
+                "factions": "NiteSec"
+            },
+            {
+                "name": "CRTX42-AA Gene Modification",
+                "repReq": 45000,
+                "basePrice": 225000000,
+                "prereq": [],
+                "factions": "NiteSec"
+            }
+        ]
+    },
+    {
+        "name": "The Black Hand",
+        "augmentations": [
+            {
+                "name": "DataJack",
+                "repReq": 112500,
+                "basePrice": 450000000,
+                "prereq": [],
+                "factions": "The Black Hand"
+            },
+            {
+                "name": "Enhanced Myelin Sheathing",
+                "repReq": 100000,
+                "basePrice": 1375000000,
+                "prereq": [],
+                "factions": "The Black Hand"
+            },
+            {
+                "name": "Embedded Netburner Module Core Implant",
+                "repReq": 175000,
+                "basePrice": 2500000000,
+                "prereq": [
+                    "Embedded Netburner Module"
+                ],
+                "factions": "The Black Hand"
+            },
+            {
+                "name": "Neuralstimulator",
+                "repReq": 50000,
+                "basePrice": 3000000000,
+                "prereq": [],
+                "factions": "The Black Hand"
+            },
+            {
+                "name": "Cranial Signal Processors - Gen IV",
+                "repReq": 125000,
+                "basePrice": 1100000000,
+                "prereq": [
+                    "Cranial Signal Processors - Gen III",
+                    "Cranial Signal Processors - Gen II",
+                    "Cranial Signal Processors - Gen I"
+                ],
+                "factions": "The Black Hand"
+            },
+            {
+                "name": "The Black Hand",
+                "repReq": 100000,
+                "basePrice": 550000000,
+                "prereq": [],
+                "factions": "The Black Hand"
+            }
+        ]
+    },
+    {
+        "name": "BitRunners",
+        "augmentations": [
+            {
+                "name": "Artificial Bio-neural Network Implant",
+                "repReq": 275000,
+                "basePrice": 3000000000,
+                "prereq": [],
+                "factions": "BitRunners"
+            },
+            {
+                "name": "Embedded Netburner Module Core V2 Upgrade",
+                "repReq": 1000000,
+                "basePrice": 4500000000,
+                "prereq": [
+                    "Embedded Netburner Module Core Implant",
+                    "Embedded Netburner Module"
+                ],
+                "factions": "BitRunners"
+            },
+            {
+                "name": "Neural Accelerator",
+                "repReq": 200000,
+                "basePrice": 1750000000,
+                "prereq": [],
+                "factions": "BitRunners"
+            },
+            {
+                "name": "Cranial Signal Processors - Gen V",
+                "repReq": 250000,
+                "basePrice": 2250000000,
+                "prereq": [
+                    "Cranial Signal Processors - Gen IV",
+                    "Cranial Signal Processors - Gen III",
+                    "Cranial Signal Processors - Gen II",
+                    "Cranial Signal Processors - Gen I"
+                ],
+                "factions": "BitRunners"
+            },
+            {
+                "name": "BitRunners Neurolink",
+                "repReq": 875000,
+                "basePrice": 4375000000,
+                "prereq": [],
+                "factions": "BitRunners"
+            }
+        ]
+    },
+    {
+        "name": "Daedalus",
+        "augmentations": [
+            {
+                "name": "Embedded Netburner Module Analyze Engine",
+                "repReq": 625000,
+                "basePrice": 6000000000,
+                "prereq": [
+                    "Embedded Netburner Module"
+                ],
+                "factions": "Daedalus"
+            },
+            {
+                "name": "Embedded Netburner Module Direct Memory Access Upgrade",
+                "repReq": 1000000,
+                "basePrice": 7000000000,
+                "prereq": [
+                    "Embedded Netburner Module"
+                ],
+                "factions": "Daedalus"
+            },
+            {
+                "name": "Embedded Netburner Module Core V3 Upgrade",
+                "repReq": 1750000,
+                "basePrice": 7500000000,
+                "prereq": [
+                    "Embedded Netburner Module Core V2 Upgrade",
+                    "Embedded Netburner Module Core Implant",
+                    "Embedded Netburner Module"
+                ],
+                "factions": "Daedalus"
+            },
+            {
+                "name": "The Red Pill",
+                "repReq": 2500000,
+                "basePrice": 0,
+                "prereq": [],
+                "factions": "Daedalus"
+            }
+        ]
+    }
+]

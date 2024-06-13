@@ -15,7 +15,7 @@ export function writeServerToHack(ns, serverToHack) {
 export function readRamToBuy(ns) {
     let ramToBuy = ns.read(ramToBuyFilename);
     if (!ramToBuy) {
-        ramToBuy = ns.read("data/ramToBuyDefault.script");
+        ramToBuy = ns.read("static_data/ramToBuyDefault.script");
 
         if (!ramToBuy) throw new Error("serverToHack not found");
     }
