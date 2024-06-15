@@ -4,6 +4,7 @@ import { removeRamToBuy } from "./imports/file_utils";
 
 import spendMoney from "./imports/spend_money";
 import factionWork from "./imports/faction_work";
+import tryNukeBackdoorAll from "try_nuke_backdoor_all";
 
 export async function main(ns) {
     ns.disableLog("getServerMoneyAvailable");
@@ -29,6 +30,7 @@ export async function main(ns) {
     while (true) {
         hacknetBuying = await spendMoney(ns, hacknetBuying);
         await factionWork(ns, focus);
+        await tryNukeBackdoorAll(ns)
 
         await ns.sleep(10000);
     }

@@ -1,6 +1,6 @@
 TODO:
-  automate Faction rep gain
-  automate augments
+  rm stageNr on basic buy script launch
+  automate augment install
   automate home server upgrades
   cut ram usage to 32GB
   automate sharing ram with factions

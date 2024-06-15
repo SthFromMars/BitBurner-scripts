@@ -5,8 +5,8 @@ import {
     readRamToBuy,
     writeRamToBuy,
     readStageNr,
+    readStages,
 } from "./imports/file_utils";
-import tryNukeBackdoorAll from "try_nuke_backdoor_all";
 
 const LEVEL = "LEVEL";
 const RAM = "RAM";
@@ -18,6 +18,7 @@ const PurchaseTypeEnum = {
     SERVER: 1,
     PROGRAM: 2,
     TRAVEL: 3,
+    AUGMENTATION: 4,
 };
 
 const HACKNET_LIMIT = 1000000000;
@@ -37,10 +38,11 @@ export default async function (ns, hacknetBuyingPar) {
     const serverPurchase = getServerUpgrade(ns);
     const programPurchase = getProgramPurchase(ns);
     const travelPurchase = getTravelPurchase(ns);
+    const augmentPurchase = getAugmentPurchase(ns);
 
     const smallestPurchase = {
         type: PurchaseTypeEnum.HACKNET,
-        price: hacknetPurchase.price,
+        price: hacknetPurchase.price * 10,
     };
     if (serverPurchase.price < smallestPurchase.price) {
         smallestPurchase.type = PurchaseTypeEnum.SERVER;
@@ -51,6 +53,9 @@ export default async function (ns, hacknetBuyingPar) {
     } else if (travelPurchase.price < smallestPurchase.price) {
         smallestPurchase.type = PurchaseTypeEnum.TRAVEL;
         smallestPurchase.price = travelPurchase.price;
+    } else if (augmentPurchase.price < smallestPurchase.price) {
+        smallestPurchase.type = PurchaseTypeEnum.AUGMENTATION;
+        smallestPurchase.price = augmentPurchase.price;
     }
 
     switch (smallestPurchase.type) {
@@ -66,9 +71,49 @@ export default async function (ns, hacknetBuyingPar) {
         case PurchaseTypeEnum.TRAVEL:
             buyTravel(ns, travelPurchase);
             break;
+        case PurchaseTypeEnum.AUGMENTATION:
+            await buyAugment(ns, augmentPurchase);
+            break;
     }
 
     return hacknetBuying;
+}
+
+function getAugmentPurchase(ns) {
+    const stageNr = readStageNr(ns);
+    const stages = readStages(ns);
+    const currAugmentations = ns.singularity.getOwnedAugmentations(true);
+    for (const augmentation of stages[stageNr].augmentations) {
+        if (!currAugmentations.includes(augmentation.name)) {
+            if (
+                augmentation.repReq <=
+                ns.singularity.getFactionRep(augmentation.faction)
+            )
+                return {
+                    price: ns.singularity.getAugmentationPrice(
+                        augmentation.name
+                    ),
+                    name: augmentation.name,
+                    faction: augmentation.faction,
+                };
+            else return { price: Infinity };
+        }
+    }
+    ns.alert("all augmentations purchased");
+    return { price: Infinity };
+}
+
+async function buyAugment(ns, augmentPurchaseParam) {
+    let augmentPurchase = augmentPurchaseParam;
+    while (augmentPurchase.price < ns.getServerMoneyAvailable("home")) {
+        ns.singularity.purchaseAugmentation(
+            augmentPurchase.faction,
+            augmentPurchase.name
+        );
+        augmentPurchase = getAugmentPurchase(ns);
+
+        await ns.sleep(0);
+    }
 }
 
 function getTravelPurchase(ns) {
@@ -127,7 +172,6 @@ async function buyProgram(ns, programPurchase) {
             if (toBuy.program === "TOR") ns.singularity.purchaseTor();
             else ns.singularity.purchaseProgram(toBuy.program);
 
-            await tryNukeBackdoorAll(ns);
             toBuy = getProgramPurchase(ns);
         } else break;
         await ns.sleep(0);
