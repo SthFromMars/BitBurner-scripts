@@ -37,7 +37,11 @@ export function readServersList(ns) {
     return JSON.parse(serversList);
 }
 
-export function readStage(ns) {
+export function readStageNr(ns) {
     const factionStage = Number.parseInt(ns.read("data/stage.script"));
     return factionStage ? factionStage : 0;
+}
+
+export function readStages(ns) {
+    return JSON.parse(ns.read("static_data/stages.script"));
 }

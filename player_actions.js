@@ -1,10 +1,9 @@
 /** @param {NS} ns */
 
-import {
-    removeRamToBuy,
-} from "./imports/file_utils";
+import { removeRamToBuy } from "./imports/file_utils";
 
 import spendMoney from "./imports/spend_money";
+import factionWork from "./imports/faction_work";
 
 export async function main(ns) {
     ns.disableLog("getServerMoneyAvailable");
@@ -22,13 +21,14 @@ export async function main(ns) {
     ns.disableLog("nuke");
     ns.disableLog("scp");
 
+    const focus = ns.args[0] !== undefined ? ns.args[0] : false;
     let hacknetBuying = true;
 
     if (!ns.getPurchasedServers().length) removeRamToBuy(ns);
 
     while (true) {
-
-        hacknetBuying = spendMoney(ns, hacknetBuying)
+        hacknetBuying = await spendMoney(ns, hacknetBuying);
+        await factionWork(ns, focus);
 
         await ns.sleep(10000);
     }

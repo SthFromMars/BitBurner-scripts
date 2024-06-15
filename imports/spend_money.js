@@ -4,7 +4,7 @@ import {
     readServerToHack,
     readRamToBuy,
     writeRamToBuy,
-    readStage,
+    readStageNr,
 } from "./imports/file_utils";
 import tryNukeBackdoorAll from "try_nuke_backdoor_all";
 
@@ -72,7 +72,7 @@ export default async function (ns, hacknetBuyingPar) {
 }
 
 function getTravelPurchase(ns) {
-    const stageNr = readStage(ns);
+    const stageNr = readStageNr(ns);
     if (stageNr !== 0) return { price: Infinity };
     const player = ns.getPlayer();
     if (!player.factions.includes("Tian Di Hui") && player.city !== "Chongqing")
