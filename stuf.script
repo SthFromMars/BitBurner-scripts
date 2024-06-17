@@ -8,17 +8,19 @@ TODO:
   dont wait for all batches to finish (requires server list persistence between loops)
 
 Factions:
-  Stage 1:
+  Stage 0:
     CyberSec
     Tian Di Hui
     Netburners
     Sector-12
-  Stage 2:
+  Stage 1:
     NiteSec
     The Black Hand
-  Stage 3:
+  Stage 2:
     BitRunners
+  Stage 3:
+    Daedalus
   Stage 4:
     Daedalus
   Stage 5:
-    Daedalus
+    w0r1d_d43m0n

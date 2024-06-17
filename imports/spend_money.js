@@ -8,6 +8,8 @@ import {
     readStages,
 } from "./imports/file_utils";
 
+import installAugentations from "./imports/install_augmentations";
+
 const LEVEL = "LEVEL";
 const RAM = "RAM";
 const CORE = "CORE";
@@ -99,7 +101,7 @@ function getAugmentPurchase(ns) {
             else return { price: Infinity };
         }
     }
-    ns.alert("all augmentations purchased");
+    if (stageNr < 5) installAugentations(ns);
     return { price: Infinity };
 }
 

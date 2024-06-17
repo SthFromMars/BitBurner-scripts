@@ -31,14 +31,6 @@ export async function main(ns) {
     while (true) {
         if (allBatchesFinishTime + 100 > Date.now()) {
             const waitTime = allBatchesFinishTime + 100 - Date.now();
-            ns.tprint(
-                "Sleep time: " +
-                    Math.floor(waitTime / 60 / 1000) +
-                    ":" +
-                    (Math.floor(waitTime / 1000) % 60) +
-                    "\n Finish time: " +
-                    new Date(allBatchesFinishTime)
-            );
             await ns.sleep(allBatchesFinishTime + 100 - Date.now());
         }
 
